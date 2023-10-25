@@ -1,12 +1,13 @@
 <script>
-import { api } from '../helpers/axios';
+import axios from 'axios'
+const baseUrl = "http://localhost:8000"
 
 export default {
   props: ['data', 'fetchData'],
   methods: {
     async handleDelete() {
       try {
-        api.delete('/patients/' + this.data?.id)
+        axios.delete(baseUrl + '/patients/' + this.data?.id)
         this.fetchData()
       } catch (error) {
         console.log(error)
@@ -19,8 +20,8 @@ export default {
 <template>
   
       <!-- {/* row 1 */} -->
-      <tr @click.prevent="$router.push(`/detail/${data?.id}`)" class="hover:cursor-pointer">
-        <td>
+      <tr class="hover:cursor-pointer">
+        <td @click.prevent="$router.push(`/detail/${data?.id}`)">
           <div className="flex items-center space-x-2">
             <div className="avatar">
               <div className="mask mask-squircle w-12 h-12">
@@ -33,14 +34,14 @@ export default {
             </div>
           </div>
         </td>
-        <td>
+        <td @click.prevent="$router.push(`/detail/${data?.id}`)">
           {{ data?.nik || 'null' }}
           <br/>
           <!-- <span className="badge badge-ghost badge-sm">Desktop Support Technician</span> -->
         </td>
-        <td>{{ data?.phone || 'null' }}</td>
-        <td>{{ data?.religion || 'null' }}</td>
-        <td>{{ data?.address || 'null' }}</td>
+        <td @click.prevent="$router.push(`/detail/${data?.id}`)">{{ data?.phone || 'null' }}</td>
+        <td @click.prevent="$router.push(`/detail/${data?.id}`)">{{ data?.religion || 'null' }}</td>
+        <td @click.prevent="$router.push(`/detail/${data?.id}`)">{{ data?.address || 'null' }}</td>
 
         <td>
           <!-- <button @click.prevent="$router.push(`/detail/${data?.id}`)" className="btn btn-ghost btn-xs">details</button> -->
