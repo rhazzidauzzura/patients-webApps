@@ -27,7 +27,7 @@ export default {
       <Loader />
     </div>
     <div v-else class="flex items-center justify-center">
-      <table className="table">
+      <table v-if="patients.length" className="table">
     <!-- {/* head */} -->
     <thead>
       <tr>

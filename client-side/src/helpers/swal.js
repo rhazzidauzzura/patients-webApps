@@ -12,7 +12,21 @@ const Toast = Swal.mixin({
   }
 })
 
+export const swalConfirm = (cb) => {
+  Swal.fire({
+    title: "Are you sure?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      cb();
+    }
+  });
+};
+
 export const toast = (status, msg) => Toast.fire({
   icon: status,
   title: msg
-})
+}) 

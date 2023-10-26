@@ -1,19 +1,21 @@
 <script>
 import axios from 'axios'
+import { useStateStore } from "../stores/state";
+import { mapActions, mapState } from "pinia";
+
 const baseUrl = "http://localhost:8000"
 
 export default {
   props: ['data', 'fetchData'],
   methods: {
-    async handleDelete() {
-      try {
-        axios.delete(baseUrl + '/patients/' + this.data?.id)
-        this.fetchData()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+    ...mapActions(useStateStore, ["handleDelete", "fetchData"]),
+    handleDestroy(id) {
+      this.handleDelete(id);
+    },
+  },
+  // created() {
+  //   this.fetchData();
+  // },
 }
 </script>
 
@@ -46,7 +48,7 @@ export default {
         <td>
           <!-- <button @click.prevent="$router.push(`/detail/${data?.id}`)" className="btn btn-ghost btn-xs">details</button> -->
           <button @click.prevent="$router.push(`/form/${data?.id}`)" className="btn btn-ghost btn-xs">edit</button>
-          <button @click.prevent="handleDelete" className="btn btn-ghost btn-xs">delete</button>
+          <button @click.prevent="handleDestroy(data.id)" className="btn btn-ghost btn-xs">delete</button>
         </td>
       </tr>
 </template>

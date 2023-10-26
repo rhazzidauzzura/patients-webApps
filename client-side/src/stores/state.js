@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { toast } from '../helpers/swal';
 import axios from 'axios'
+import { swalConfirm } from '../helpers/swal';
 
 const api = axios.create({
   baseURL: 'http://localhost:8000',
@@ -17,9 +18,11 @@ export const useStateStore = defineStore('state', {
   actions: {
     async handleDelete(id) {
       try {
-        await api.delete('/patients/' + id)
-        toast('success', `Success Deleted Data Patient`)
-        this.fetchData()
+         swalConfirm(() => {
+          api.delete('/patients/' + id)
+          this.fetchData()
+          toast('success', `Success Deleted Data Patient`)
+        });
       } catch (error) {
         toast('error', error.message)
       }
@@ -31,7 +34,8 @@ export const useStateStore = defineStore('state', {
         this.patients = res.data.result
       } catch (error) {
         toast('error', error.message)
-      } finally { setTimeout(() => this.loading = false, 1000) }
+      } 
+      finally { setTimeout(() => this.loading = false, 1000) }
     },
     async handleUpdateOrCreate(state, id) {
       this.loading = true
